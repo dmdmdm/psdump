@@ -2,7 +2,8 @@
 #define __PSD_TYPES_H__
 
 #include <stddef.h>
-
+#include <stdlib.h> // For malloc()
+#include <string.h> // For memset()
 
 typedef unsigned char			psd_bool;
 #define psd_true				1

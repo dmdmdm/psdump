@@ -248,8 +248,8 @@ static psd_status psd_get_layer_fill_opacity(psd_context * context, psd_layer_re
 // Section divider setting (Photoshop 6.0)
 static psd_status psd_get_layer_section_divider(psd_context * context, psd_layer_record * layer, psd_int size)
 {
-	// Type. 4 possible values, 0 = any other type of layer, 1 = open ¡°folder¡±, 2 =
-	// closed ¡°folder¡±, 3 = bounding section divider, hidden in the UI
+	// Type. 4 possible values, 0 = any other type of layer, 1 = open Â¡Â°folderÂ¡Â±, 2 =
+	// closed Â¡Â°folderÂ¡Â±, 3 = bounding section divider, hidden in the UI
 	layer->divider_type = psd_stream_get_int(context);
 	switch(layer->divider_type)
 	{
@@ -381,7 +381,7 @@ static psd_status psd_get_layer_info(psd_context * context)
 
 		// Channel information. Six bytes per channel, consisting of:
 		// 2 bytes for Channel ID: 0 = red, 1 = green, etc.;
-		// ¨C1 = transparency mask; ¨C2 = user supplied layer mask
+		// Â¨C1 = transparency mask; Â¨C2 = user supplied layer mask
 		// 4 bytes for length of corresponding channel data. (**PSB** 8 bytes for
 		// length of corresponding channel data.)
 		for(j = 0; j < layer->number_of_channels; j ++)
@@ -405,7 +405,7 @@ static psd_status psd_get_layer_info(psd_context * context)
 		// Opacity. 0 = transparent ... 255 = opaque
 		layer->opacity = psd_stream_get_char(context);
 
-		// Clipping: 0 = base, 1 = non¨Cbase
+		// Clipping: 0 = base, 1 = nonÂ¨Cbase
 		layer->clipping = psd_stream_get_bool(context);
 
 		// Flags
@@ -609,9 +609,9 @@ static psd_status psd_get_layer_info(psd_context * context)
 				case 'tySh':
 					status = psd_get_layer_type_tool(context, layer);
 					break;
-				//case 'TySh':
-					// Type tool object setting (Photoshop 6.0)
-					//break;
+				case 'TySh': // Type tool object setting (Photoshop 6.0+)
+					status = psd_get_layer_type_tool6(context, layer);
+					break;
 				case 'SoCo':
 					status = psd_get_layer_solid_color(context, layer);
 					break;
@@ -748,7 +748,7 @@ static psd_status psd_get_mask_info(psd_context * context)
 	// Opacity. 0 = transparent, 100 = opaque.
 	context->global_layer_mask.opacity = psd_stream_get_short(context);
 
-	// Kind. 0 = Color selected¡ªi.e. inverted; 1 = Color protected;128 = use
+	// Kind. 0 = Color selectedÂ¡Âªi.e. inverted; 1 = Color protected;128 = use
 	// value stored per layer. This value is preferred. The others are for
 	// backward compatibility with beta versions.
 	context->global_layer_mask.kind = psd_stream_get_char(context);

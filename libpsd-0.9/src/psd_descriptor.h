@@ -8,6 +8,15 @@ extern "C" {
 #include "libpsd.h"
 
 
+void psd_stream_get_unicode_name(psd_context *);
+void psd_stream_get_object_id(psd_context *);
+void psd_stream_get_object_string(psd_context *);
+void psd_stream_get_object_enumerated(psd_context *);
+void psd_stream_get_object_descriptor(psd_context *);
+void psd_stream_get_object_integer(psd_context *);
+void psd_stream_get_object_double(psd_context *);
+void psd_stream_get_object_unit_float(psd_context *);
+
 void psd_stream_get_object_null(psd_uint type, psd_context * context);
 psd_argb_color psd_stream_get_object_color(psd_context * context);
 void psd_stream_get_object_contour(psd_uchar * lookup_table, psd_context * context);

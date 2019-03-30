@@ -48,7 +48,7 @@ static psd_matrix psd_basis_matrix =
 static void psd_stream_get_object_list(psd_context * context);
 
 
-static void psd_stream_get_unicode_name(psd_context * context)
+void psd_stream_get_unicode_name(psd_context * context)
 {
 	psd_int length;
 	
@@ -56,7 +56,7 @@ static void psd_stream_get_unicode_name(psd_context * context)
 	psd_stream_get_null(context, length);
 }
 
-static void psd_stream_get_object_id(psd_context * context)
+void psd_stream_get_object_id(psd_context * context)
 {
 	psd_int length;
 	
@@ -153,14 +153,14 @@ static void psd_stream_get_object_reference(psd_context * context)
 }
 
 // 'doub' = Double
-static void psd_stream_get_object_double(psd_context * context)
+void psd_stream_get_object_double(psd_context * context)
 {
 	// Actual value (double)
 	psd_stream_get_null(context, 8);
 }
 
 // 'UntF' = Unit psd_float
-static void psd_stream_get_object_unit_float(psd_context * context)
+void psd_stream_get_object_unit_float(psd_context * context)
 {
 	// Units the following value is in
 	psd_stream_get_int(context);
@@ -170,13 +170,13 @@ static void psd_stream_get_object_unit_float(psd_context * context)
 }
 
 // 'TEXT' = String
-static void psd_stream_get_object_string(psd_context * context)
+void psd_stream_get_object_string(psd_context * context)
 {
 	psd_stream_get_unicode_name(context);
 }
 
 // 'enum'= Enumerated
-static void psd_stream_get_object_enumerated(psd_context * context)
+void psd_stream_get_object_enumerated(psd_context * context)
 {
 	// TypeID: 4 bytes (length), followed either by string or (if length is zero) 4-
 	// byte typeID
@@ -187,14 +187,14 @@ static void psd_stream_get_object_enumerated(psd_context * context)
 }
 
 // 'long' = Integer
-static void psd_stream_get_object_integer(psd_context * context)
+void psd_stream_get_object_integer(psd_context * context)
 {
 	// Value
 	psd_stream_get_int(context);
 }
 
 // 'bool' = Boolean
-static void psd_stream_get_object_boolean(psd_context * context)
+void psd_stream_get_object_boolean(psd_context * context)
 {
 	// Boolean value
 	psd_stream_get_char(context);
@@ -223,7 +223,7 @@ static void psd_stream_get_object_alias(psd_context * context)
 }
 
 // 'Objc' = Descriptor
-static void psd_stream_get_object_descriptor(psd_context * context)
+void psd_stream_get_object_descriptor(psd_context * context)
 {
 	psd_uint type;
 	psd_int length, number_items;
@@ -241,12 +241,8 @@ static void psd_stream_get_object_descriptor(psd_context * context)
 	while(number_items --)
 	{
 		// Key: 4 bytes ( length) followed either by string or (if length is zero) 4-byte
-		// key
-		length = psd_stream_get_int(context);
-		if(length == 0)
-			psd_stream_get_int(context);
-		else
-			psd_stream_get_null(context, length);
+		psd_stream_get_object_id(context);
+
 		// Type: OSType key
 		type = psd_stream_get_int(context);
 

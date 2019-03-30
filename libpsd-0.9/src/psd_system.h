@@ -2,6 +2,8 @@
 #define __PSD_SYSTEM_H__
 
 #include <assert.h>
+#include <string.h>
+#include <stdlib.h>
 #include "psd_types.h"
 
 #ifdef __cplusplus
